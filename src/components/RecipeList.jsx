@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import './RecipeList.css'
+import "./RecipeList.css";
 
 import Title from "./Title";
 import Form from "./Form";
@@ -20,7 +20,11 @@ const RecipeList = () => {
             try {
                 setLoading(true);
                 const recipeData = await getRecipes(searchTerm);
-                setRecipes(recipeData);
+                if (recipeData) {
+                    setRecipes(recipeData);
+                } else {
+                    setRecipes([]);
+                }
             } finally {
                 setLoading(false);
             }
@@ -33,9 +37,13 @@ const RecipeList = () => {
             <Title title="Daily Dishes" />
             <Form />
             {loading && <div className="loading">Loading...</div>}
-            {recipes ? (recipes.map((recipe) => {
-                return <Recipe key={recipe.idMeal} recipe={recipe} />;
-            })) : (<div className="error">No recipe</div>)}
+            {recipes.length >= 1 ? (
+                recipes.map((recipe) => {
+                    return <Recipe key={recipe.idMeal} recipe={recipe} />;
+                })
+            ) : (
+                <div className="error">No recipe</div>
+            )}
         </div>
     );
 };

@@ -17,11 +17,10 @@ const Form = () => {
             return;
         }
 
+        setSearchTerm(value.trim());
+
         setValue("");
         setError("");
-
-        //send data
-        setSearchTerm(value.trim());
     };
 
     const changeHandler = (e) => {
